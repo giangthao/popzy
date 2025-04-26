@@ -29,7 +29,7 @@ main{
     font-weight: 600;
 }
 
-.modal-backdrop {
+.popzy__backdrop {
     position: fixed;
     inset: 0;
     display: flex;
@@ -42,16 +42,16 @@ main{
     transition-duration: 0.3s;
 }
 
-.modal-backdrop.show{
+.popzy--show{
     visibility: visible;
     opacity: 1;
 }
 
-.modal-backdrop.show .modal-container{
+.popzy--show .popzy__container{
     transform: scale(1);
 }
 
-.modal-container {
+.popzy__container {
     position: relative;
     background-color: #fff;
     width: min(600px, 90%);
@@ -61,7 +61,7 @@ main{
     transition: transform 0.3s;
 }
 
-.modal-close {
+.popzy__close {
     position: absolute;
     top: 12px;
     right: 12px;
@@ -72,19 +72,19 @@ main{
     font-size: 2rem;
 }
 
-.modal-close:hover{
+.popzy__close:hover{
     background-color: #333;
     cursor: pointer;
     color: #fff;
 }
 
-.modal-content {
+.popzy__content {
     margin-top: 20px;
     max-height: 80vh;
     overflow-y: auto;
 }
 
-.modal-footer{
+.popzy__footer{
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -92,26 +92,26 @@ main{
     padding: 20px 0;
 }
 
-.modal-btn{
+.popzy__btn{
   padding: 8px 20px;
   border-radius: 6px;
   background-color: #464e62;
   color: #fff;
 }
 
-.modal-btn.primary{
+.popzy__btn--primary{
     background-color:cornflowerblue;
 }
 
-.modal-btn.danger{
+.popzy__btn--danger{
     background-color: red;
 }
 
-.modal-btn.pull-left{
+.popzy__btn--pull-left{
     margin-right: auto;
 }
 
-.no-scroll{
+.popzy--no-scroll{
     overflow: hidden;
 }
 
