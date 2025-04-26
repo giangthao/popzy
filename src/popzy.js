@@ -162,7 +162,7 @@ Popzy.prototype.open = function () {
   }
 
   // Disable scrolling
-  if (this.opt.enableScrollLock) {
+  if (Popzy.elements.length === 1 && this.opt.enableScrollLock) {
     const target = this.opt.scrollLockTarget();
     if (this._hasScrollbar(target)) {
       target.classList.add("popzy--no-scroll");
@@ -217,8 +217,7 @@ Popzy.prototype.close = function (destroy = this.opt.destroyOnClose) {
         const target = this.opt.scrollLockTarget();
         if (this._hasScrollbar(target)) {
           target.classList.remove("popzy--no-scroll");
-          const targetPaddingRight = parseInt(getComputedStyle(target).paddingRight);
-          target.style.paddingRight = targetPaddingRight + "px";
+          target.style.paddingRight = "";
         }
       }
 
