@@ -235,6 +235,13 @@ blockquote {
     text-decoration: underline;
 }
 
+.wrapper{
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    padding-right: 50px;
+}
+
 .container {
     margin-right: auto;
     margin-left: auto;
