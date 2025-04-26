@@ -1,6 +1,26 @@
 Popzy.elements = [];
 
 function Popzy(options = {}) {
+  if(!options.content && !options.templateId) {
+    console.error('You must be provide one of "content" or "templateId".');
+    return;
+  }
+
+  if(options.content && options.templateId) {
+    options.templateId = null;
+    console.warn('Both "content" and "templateId" specified. "content" will take precedence, and "templateId" will be igored.')
+  }
+
+  
+  if(options.templateId) {
+    this.template = document.querySelector(`#${options.templateId}`);
+
+    if (!this.template) {
+      console.error(`#${this.opt.templateId} does not exist`);
+      return;
+    }
+  }
+
   this.opt = Object.assign(
     {
       destroyOnClose: true,
@@ -10,12 +30,7 @@ function Popzy(options = {}) {
     },
     options
   );
-  this.template = document.querySelector(`#${this.opt.templateId}`);
-
-  if (!this.template) {
-    console.error(`#${this.opt.templateId} does not exist`);
-    return;
-  }
+  this.content = this.opt.content;
 
   this._allowBackdropClose = this.opt.closeMethods.includes("overlay");
   this._allowButtonClose = this.opt.closeMethods.includes("button");
@@ -40,7 +55,10 @@ Popzy.prototype._getScrollbarWidth = function () {
 };
 
 Popzy.prototype._build = function () {
-  const content = this.template.content.cloneNode(true);
+  const contentNode = this.content ? document.createElement('div') : this.template.content.cloneNode(true);
+  if(this.content) {
+    contentNode.innerHTML = this.content;
+  }
 
   this._backdrop = document.createElement("div");
   this._backdrop.className = "popzy__backdrop";
@@ -59,12 +77,12 @@ Popzy.prototype._build = function () {
     container.append(closeBtn);
   }
 
-  const modalContent = document.createElement("div");
-  modalContent.className = "popzy__content";
+  this._modalContent = document.createElement("div");
+  this._modalContent.className = "popzy__content";
 
   //Append content and elements
-  modalContent.append(content);
-  container.append(modalContent);
+  this._modalContent.append(contentNode);
+  container.append(this._modalContent);
 
   if (this.opt.footer) {
     this._modalFooter = document.createElement("div");
@@ -78,6 +96,14 @@ Popzy.prototype._build = function () {
   this._backdrop.append(container);
   document.body.append(this._backdrop);
 };
+
+Popzy.prototype.setContent = function (html) {
+  this.content = html;
+  if(this._modalContent) {
+    this._modalContent.innerHTML = this.content;
+  }
+ 
+}
 
 Popzy.prototype.setFooterContent = function (html) {
   this._footerContent = html;
