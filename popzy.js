@@ -1,22 +1,16 @@
-const $ = document.querySelector.bind(document);
-const $$ = document.querySelectorAll.bind(document);
-
 Popzy.elements = [];
 
 function Popzy(options = {}) {
   this.opt = Object.assign(
     {
-      // templateId,
       destroyOnClose: true,
       footer: false,
       cssClass: [],
       closeMethods: ["button", "overlay", "escape"],
-      // onOpen,
-      // onClose
     },
     options
   );
-  this.template = $(`#${this.opt.templateId}`);
+  this.template = document.querySelector(`#${this.opt.templateId}`);
 
   if (!this.template) {
     console.error(`#${this.opt.templateId} does not exist`);
@@ -193,76 +187,4 @@ Popzy.prototype.close = function (destroy = this.opt.destroyOnClose) {
 
 Popzy.prototype.destroy = function () {
   this.close(true);
-};
-
-const modal1 = new Popzy({
-  templateId: "popzy-1",
-  //   closeMethods: ['escape'],
-  destroyOnClose: false,
-});
-
-$("#open-popzy-1").onclick = () => {
-  modal1.open();
-};
-
-const modal2 = new Popzy({
-  templateId: "popzy-2",
-  footer: true,
-  cssClass: ["class1", "class2", "classN"],
-  onOpen: () => {
-    console.log("Modal opened");
-  },
-  onClose: () => {
-    console.log("Modal closed");
-  },
-});
-
-$("#open-popzy-2").onclick = () => {
-  const modalElement = modal2.open();
-  const form = modalElement.querySelector("#login-form");
-  if (form) {
-    form.onsubmit = (e) => {
-      e.preventDefault();
-      const formData = {
-        email: $("#email").value.trim(),
-        password: $("#password").value.trim(),
-      };
-      console.log(formData);
-    };
-  }
-};
-
-const modal3 = new Popzy({
-  templateId: "popzy-3",
-  closeMethods: ["escape"],
-  footer: true,
-  onOpen: () => {
-    console.log("Open modal 3");
-  },
-  onClose: () => {
-    console.log("Close modal 3");
-  },
-});
-
-// modal3.setFooterContent(`
-//     <p>Footer </p>
-// `)
-
-modal3.addFooterButton("Danger", "popzy__btn popzy__btn--danger popzy--pull-left", (e) => {
-  console.log(e);
-  console.log("Danger button clicked");
-});
-
-modal3.addFooterButton("Cancel", "popzy__btn", (e) => {
-  console.log(e);
-  modal3.close();
-});
-
-modal3.addFooterButton("<span>Agree</span>", "popzy__btn popzy__btn--primary", (e) => {
-  console.log(e);
-  console.log("Agree button clicked");
-});
-
-$("#open-popzy-3").onclick = () => {
-  modal3.open();
 };
